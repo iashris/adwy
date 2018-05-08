@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>A Date With Yourself</title>
+	<script src="./js/chat-ui.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700i|Roboto+Mono" rel="stylesheet">
+	<link href="./css/chat-ui.min.css" rel="stylesheet" media="all" />
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+	html,body{
+		/*overflow-y: hidden;*/
+	}
+	.input-container {
+		position: relative;
+		box-shadow: none;
+	}
+	.text_button {
+	font-family: 'Roboto Mono';
+    border: 2px solid black;
+    border-radius: 1px;
+    padding: 0.5rem 3rem;
+    min-width: 4rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+    background: white;
+    transition: 0.3s all;
+}
+#btn-group{
+	margin:0rem 20px;
+}
+.text_button:hover{
+	color: white;
+    background: black;
+    transition: 0.3s all;
+}
+	#chat {
+		height: 400px;
+		margin: 20px;
+		overflow: auto;
+	}
+	.theme-title{
+		font-family: 'Playfair Display';
+		font-style: bold-italic;
+		font-size: 60px;
+	}
+	#input {
+		padding: 5px;
+		display: none;
+		margin: 20px;
+	}
+	#chat-ui-dialog {
+		background: transparent;
+	}
+	.code-example {
+		margin: 20px 0 20px 0;
+	}
+	.code-example__code {
+		position: relative;
+	}
+	.code-example__code_short {
+		max-height: 200px;
+		overflow: hidden;
+	}
+	.code-example__code_short:after {
+		position: absolute;
+		content: '';
+		height: 100px;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+		background: linear-gradient(to bottom, rgba(43,43,43,0) 0%,rgb(0, 0, 0) 100%);
+	}
+	.input-table {
+		display: table;
+		width: 100%;
+	}
+	.input-table__cell {
+		display: table-cell;
+		padding: 3px;
+	}
+	.input-table__input-field {
+		width: 100%;
+		padding: 3px 5px;
+	}
+	.input-table__send {
+		width: 100%;
+		padding: 3px;
+	}
+	.top-header{
+		margin:4vh;
+		display: flex;
+		justify-content: space-around;
+		text-align: center;
+		align-items: center;
+	}
+	.year-list{
+		display: flex;
+		align-items: stretch; /* Default */
+		justify-content: space-around;
+
+		margin: 5vh 8vh;
+		padding: 0;
+	}
+	.yearr{
+		width:50px;
+		height:50px;
+		border-radius: 50%;
+		filter: grayscale() contrast(100%);
+		background-size: cover;
+		transition:0.3s all;
+		cursor: pointer;
+	}
+		.yearr:hover,.yearr.active{
+		filter:none;
+		width:80px;
+		height:80px;
+		transition:0.3s all;
+	}
+	.year-list li{
+		display: block;
+		flex: 0 1 auto; /* Default */
+		list-style-type: none;
+		text-align: center;
+	}
+	#chat-ui-dialog .chat-ui-dialog-bubble_user {
+    background-color: #444;
+    border:none;
+    float: right;
+    color:white;
+    padding:15px;
+}
+#chat-ui-dialog .chat-ui-dialog-bubble_chat {
+    background-color: #ddd;
+    border:none;
+    float: left;
+    color:#222;
+    padding: 15px;
+}
+#vizspace{
+
+	height: 380px;
+}
+#vizspace canvas{
+	width:100%;
+	height:100%;
+}
+</style>
+
+</head>
+<body>
+	<div class="top-header"></div>
+		<div class="container">
+			<div class="col-md-5">
+				<div id="chat" class="input-container">
+
+				</div>
+					<div id="btn-group">
+						<button class="text_button" id="startbtn">Start</button>
+						<button class="text_button" id="resetbtn">Reset</button>
+					</div>
+			</div>
+			<div class="col-md-7">
+				<h1 class="theme-title">Feelings</h1>
+				<div id="vizspace"></div>
+			</div>
+
+		</div>
+
+		<ul class="year-list">
+			<li><h4>2018</h4><div class="yearr year2018"/></li>
+			<li><h4>2017</h4><div class="yearr year2017"/></li>
+			<li><h4>2016</h4><div class="yearr active year2016"/></li>
+			<li><h4>2015</h4><div class="yearr year2015"/></li>
+			<li><h4>2014</h4><div class="yearr year2014"/></li>
+			<li><h4>2013</h4><div class="yearr year2013"/></li>
+			<li><h4>2012</h4><div class="yearr year2012"/></li>
+			<li><h4>2011</h4><div class="yearr year2011"/></li>
+		</ul>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+		<script>
+let USERNAME="";
+var appeared=[];
+globalMode=true;
+globaldata=null;
+yearselec=null;
+				function setup(){
+					var Cwidth = document.getElementById('vizspace').offsetWidth;
+					var Cheight = document.getElementById('vizspace').offsetHeight;
+					var canvas = createCanvas(Cwidth,Cheight);
+					canvas.parent("vizspace");
+					textAlign(CENTER);
+					smooth();
+
+				}
+				function draw(){
+					background(255);
+					strokeWeight(2);
+					stroke(0);
+
+
+					var yir=2018;
+					if(globalMode){
+					line(0,height/2,width,height/2);
+					for(var x=width*0.1;x<=width*0.95;x+=0.8*width/7){
+						strokeWeight(1);
+						stroke(0);
+						line(x,height/2-7,x,height/2+7);
+						noStroke();
+						fill(0)
+						textSize(14)
+						text(yir,x,height/2+23);
+						yir--;
+
+						text("😀",30,height/2-80);
+						text("😌",30,height/2-40);
+						text("😓",30,height/2+40);
+						text("😡",30,height/2+80);
+					}
+
+					appeared.forEach(v=>{
+						var ELX=map(v.timestamp,1514764800,1293840000,width*0.1,width*0.9);
+						var ELY=height/2-v.ELY;
+						noStroke();
+						fill(v.cola);
+						ellipse(ELX,ELY,10,10);
+					})
+					}
+					else{
+						line(0,height-30,width,height-30);
+						months=["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
+						mon=0;
+						for(var x=width*0.1;x<=width*0.95;x+=0.8*width/11){
+						strokeWeight(1);
+						stroke(0);
+						line(x,height-30-7,x,height-30+7);
+						noStroke();
+						fill(0)
+						text(months[mon],x,height-30+23);
+						mon++;
+						seldata=globaldata.filter(v=>v.yr==yearselec.toString());
+						console.log(seldata)
+						noFill();
+							stroke(250,0,150);
+							strokeWeight(2);
+						beginShape();
+
+						for(var i=0;i<12;i++){
+							var nums=seldata.filter(s=>s.month==i+1).length
+
+							vertex(width*0.1+0.8*i*width/11,height-30-nums*4);
+
+
+
+						}
+						endShape();
+					}
+					}
+
+				}
+
+			$(document).ready(function() {
+				fetch("../profile_information/profile_update_history.json").then(rawdata=>rawdata.json()).then(data=>{
+
+					data.sort((a,b) => b.timestamp-a.timestamp).forEach(v=>v.yr=new Date(v.timestamp*1000).getFullYear())
+					z=data.filter(function (v) {
+
+						if (v.title) {
+							return v.title.indexOf('perfil') != -1 || v.title.indexOf('profile') != -1
+						} else {
+							return false;
+						}
+					});
+					[2018,2017,2016,2015,2014,2013,2012,2011].forEach(year=>{
+						var items=z.filter(v=>v.yr==year)
+						var chosen = items[Math.floor(Math.random()*items.length)];
+
+						if(items.length>0){
+							if (USERNAME==""){
+								USERNAME=chosen.title.split(" ")[0];
+
+								$('.theme-title').html(`Hello, ${USERNAME}`);
+								chat.trigger('add-phrase', `Hi, ${USERNAME} from the present! I am ${USERNAME} from the past. Well more like, we are multiple ${USERNAME}(s) from the past. Nice to meet you!`);
+
+
+							}
+							$(".year"+year).css("background-image",'url('+chosen.attachments[0].data[0].media.uri+')')
+						}
+						else{
+							$(".year"+year).css("background-image",'url(https://i.stack.imgur.com/DskhO.png?s=328&g=1)')
+						}
+					})
+				})
+
+
+				$(".yearr").click(function(){
+					$(".yearr").removeClass("active");
+					$(this).addClass("active");
+					isSendingMessages=false;
+					$("#startbtn").html("RESUME");
+					globalMode=false;
+					yearselec=$(this).attr("class").split(' ')[1].replace('year','');
+				})
+				function highlightYear(yearnum){
+					$(".yearr").removeClass("active");
+					$(".year"+yearnum).addClass("active");
+				}
+				var phrases = [];
+
+				fetch("./data.json").then(rawdata=>rawdata.json()).then(data=>{
+					phrases=data;
+					globaldata=data;
+				})
+				var chat = ChatUI({
+					title: 'John Doe',
+					avatar: './images/banner.jpg',
+					subtitle: 'consultant'
+				}).render('#chat', 'dialog');
+				chat.trigger('open-chat');
+				var timeoutId = null;
+				let isSendingMessages = false;
+				var chatMessage = function(msg) {
+					if (msg === 'close') {
+						chat.trigger('close-chat');
+					} else if (msg === 'clear') {
+						chat.trigger('clear-dialog');
+					} else if (!timeoutId) {
+						var waitTime=900;
+						timeoutId = setInterval(function() {
+							var phraseNumber = Math.floor(Math.random() * (phrases.length - 1));
+							setTimeout(function() {
+							if (isSendingMessages) {chat.trigger('is-typing');}
+						}, 500);
+							if (isSendingMessages) {
+								var pickedArr=phrases.splice(phraseNumber,1);
+								var picked=pickedArr[0];
+
+
+							console.log(phrases.length + " are left")
+							chat.trigger('add-phrase', `<h5>To ${picked.to}</h5><h6><i>${new Date(picked.timestamp*1000).toString().substr(4,11)}</i></h6><p>${picked.content}</p>`);
+
+							highlightYear(picked.yr);
+							var prepr={"happy":80,"calm":40,"confusion":-40,"anger":-80}
+							var cola={"happy":"rgba(255,99,71,0.5)","calm":"rgba(0,228,225,0.5)","confusion":"rgba(255,0,238,0.5)","anger":"rgba(255,0,0.5)"}
+							picked.ELY=prepr[picked.match];
+							picked.cola=cola[picked.match];
+
+							appeared.push(picked);
+							}
+						}, waitTime);
+
+					}
+				};
+
+				let hasPressedEver = false;
+				$("#startbtn").on("click",function(e){
+					globalMode=true;
+					if(!hasPressedEver){
+						chat.trigger('add-phrase', {side: 'user', message: "Hello me from the past! Let's start."});
+						hasPressedEver=true;
+					}
+					else if(!isSendingMessages){
+						chat.trigger('add-phrase', {side: 'user', message: "Let's resume our date!"});
+					}
+					else if(isSendingMessages){
+						chat.trigger('add-phrase', {side: 'user', message: "Hey, I'll be back soon, let's pause."});
+					}
+					isSendingMessages = !isSendingMessages;
+
+					$(this).html(isSendingMessages?"PAUSE":"RESUME");
+				})
+				$("#resetbtn").on("click",function(e){
+					globalMode=true;
+				})
+
+				chat.on('user-send-message', chatMessage);
+
+				var $input = $('.input-table__input-field');
+				$('.input-table').on('submit', function(event) {
+					event.preventDefault();
+					chat.trigger('add-phrase', {side: 'user', message: $input.val()});
+					$input.val('');
+				});
+			});
+
+		</script>
+
+	</body>
+	</html>

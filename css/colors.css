@@ -1,0 +1,41 @@
+
+/* live */
+.green-background {
+    background-color: #98D3A2;
+}
+
+/* future */
+.purple-background {
+    background-color: #94618e
+}
+
+/* love */
+.coral-background {
+    background-color: #ff533d
+}
+
+/* gossip */
+.blue-background {
+    background-color: #e37222
+}
+
+
+/* myself */
+.yellow-background {
+    background-color: #f9cf00
+}
+
+/* info */
+.gray-background {
+    background-color: #d9d9d9
+}
+
+.green-background:hover,
+.blue-background:hover,
+.purple-background:hover,
+.coral-background:hover,
+.gray-background:hover,
+.yellow-background:hover {
+    background-color: inherit;
+    filter: brightness(50%)
+}

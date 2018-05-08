@@ -1,0 +1,32 @@
+
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom: 1px solid rgb(207, 207, 207)
+}
+
+.btn {
+    margin: 2rem 0.5rem;
+}
+
+
+/* FOOTER */
+footer {
+    margin: 0.5rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+footer .credentials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer .small-font {
+    font-size: 10px;
+}
