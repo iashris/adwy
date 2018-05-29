@@ -53,7 +53,7 @@ If you are on Mac, execute the launch.sh file by using the following command:
 ```
 ./launch.sh
 ```
-After a few seconds a chrome tab is gonna open with the address **localhost:8000** and A Date With Yourself will appear. If you are on Windows, directly enter the list of commands mentioned in the launch.sh file into the Command Prompt. We have commented the launch.sh file for you to follow.
+After a few seconds a chrome tab is gonna open with the address **localhost:8000** and A Date With Yourself will appear. If you are on Windows, directly enter the list of commands mentioned in the launch.sh file into the Command Prompt. We have commented the launch.sh file for you to follow. (Refer to Instructions for Windows.txt for detailed help)
 
 Please Note : You need to have either Python 2 or 3 installed in your machine to run ADWY.
 
