@@ -51,7 +51,7 @@ def DeriveEssence(msg,to):
 		return False
 	timestamp = msg["timestamp"]
 	year = datetime.datetime.fromtimestamp(timestamp).strftime('%Y')
-	month=datetime.datetime.fromtimestamp(timestamp).strftime('%-m')
+	month=(int)datetime.datetime.fromtimestamp(timestamp).strftime('%m')
 	M = msg["content"].lower()
 	for keyword in calm_:
 		if keyword.lower() in M:
@@ -69,7 +69,6 @@ def DeriveEssence(msg,to):
 		if keyword.lower() in M:
 			togo={'content':msg["content"],'timestamp':msg["timestamp"],'to':to,'yr':year,"match":"confusion",'month':month}
 			OUTPUT.append(togo);
-
 
 def ExtractResults(arr):
 	for conv in arr:
