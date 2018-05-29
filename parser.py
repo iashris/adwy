@@ -87,10 +87,6 @@ for file in files:
 filteredChatArray = FilterChat(chatarray);
 ExtractResults(filteredChatArray)
 print("--------------_DONE-------------------")
-with open('data.json', 'w') as fout:
+with open('data.json', 'w', encoding='utf-8') as fout:
     json.dump(OUTPUT, fout)
 #print([a["participants"] for a in filteredChatArray])
-
-
-
-

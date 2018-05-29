@@ -23,3 +23,12 @@ python -m http.server
 if on Python 3
 
 Now open localhost:8000 on Chrome and tada, it should work
+
+Common errors
+
+If any of your friends has a non unicode character in their names, some output will fail and will display charmap codec error. Fix it by running this in Command Prompt
+
+chcp 65001
+set PYTHONIOENCODING=utf-8
+
+then start parser.py
