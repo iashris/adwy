@@ -1,0 +1,25 @@
+If you are Windows, you won't be able to launch the launch.sh file (only works on mac)
+
+So in this file, we will see how can you make ADWY still work.
+
+Ensure python runs directly from command line.
+
+Go to the adwy-master folder and type
+
+python parser.py
+
+You should see the mean number of messages you have sent to people and then step by step analysis messages
+
+Finally when this step ends, a data.json file will be generated.
+
+Launch a http server by typing
+
+python -m SimpleHTTPServer
+
+if on Python 2
+
+python -m http.server
+
+if on Python 3
+
+Now open localhost:8000 on Chrome and tada, it should work
