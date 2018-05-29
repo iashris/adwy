@@ -35,7 +35,7 @@ The environment is ready. Now is time to execute the website.
 - Windows: **Cmd**
 
 ### 5. Change your directory using cd command
-Use the following command to access to the root of the project. Where the index.html is:
+Use the following command to access to the root of the project (adwy-master if you have downloaded from Github).
 ```
 cd path/to/your/directory
 ```
@@ -49,13 +49,13 @@ You can check if your in the correct folder by entering the command `ls`then all
 
 
 ### 6. Run the app
-Execute the launch.sh file by using the following command:
+If you are on Mac, execute the launch.sh file by using the following command:
 ```
 ./launch.sh
 ```
-After a few seconds a chrome tab is gonna open with the address **localhost:8000** and A Date With Yourself will appear. If you are on Windows and cannot run .sh files, directly enter the list of commands mentioned in the launch.sh file into the Command Prompt.
+After a few seconds a chrome tab is gonna open with the address **localhost:8000** and A Date With Yourself will appear. If you are on Windows, directly enter the list of commands mentioned in the launch.sh file into the Command Prompt. We have commented the launch.sh file for you to follow.
 
-Please Note : You need to have either Python 2 or 3 installed in your machine to run ADWY. Also, if you are on Windows machine and are unable to launch the .sh file, open the file in a text editor and enter the code into the Command Prompt line by line. We have commented the launch.sh file for you to follow.
+Please Note : You need to have either Python 2 or 3 installed in your machine to run ADWY.
 
 ![Alt text](./screenshots/Localhost.png "Localhost")
 
