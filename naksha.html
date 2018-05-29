@@ -264,8 +264,9 @@ yearselec=null;
 				}
 
 			$(document).ready(function() {
-				fetch("../profile_information/profile_update_history.json").then(rawdata=>rawdata.json()).then(data=>{
-
+				fetch("../profile_information/profile_update_history.json").then(rawdata=>rawdata.json()).then(datax=>{
+					//fuckn facebook keeps changing the fuckn structure of its repo data
+					data=datax.profile_updates;
 					data.sort((a,b) => b.timestamp-a.timestamp).forEach(v=>v.yr=new Date(v.timestamp*1000).getFullYear())
 					z=data.filter(function (v) {
 
